@@ -1,0 +1,107 @@
+html,
+body {
+  height: 100%;
+}
+
+h1 { white-space: nowrap; }
+
+.highlight {
+  background-color: rgb(255, 255, 140);
+}
+
+p#sentence {
+  list-style-type: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 25px;
+  padding-left: 5px;
+  background-color: #f5f5f5;
+  opacity: 0.8;
+  background-image:  repeating-linear-gradient(45deg, #eff0ff 25%, transparent 25%, transparent 75%, #eff0ff 75%, #eff0ff), repeating-linear-gradient(45deg, #eff0ff 25%, #f5f5f5 25%, #f5f5f5 75%, #eff0ff 75%, #eff0ff);
+  background-position: 0 0, 4px 4px;
+  background-size: 8px 8px;
+  border: 1px solid rgb(114, 114, 114);
+  border-radius: 0.25rem;
+}
+
+.sentence {
+  list-style-type: none;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  line-height: 25px;
+  padding-left: 5px;
+  background-color: #f5f5f5;
+  opacity: 0.8;
+  background-image:  repeating-linear-gradient(45deg, #eff0ff 25%, transparent 25%, transparent 75%, #eff0ff 75%, #eff0ff), repeating-linear-gradient(45deg, #eff0ff 25%, #f5f5f5 25%, #f5f5f5 75%, #eff0ff 75%, #eff0ff);
+  background-position: 0 0, 4px 4px;
+  background-size: 8px 8px;
+  border: 1px solid rgb(114, 114, 114);
+  border-radius: 0.25rem;
+}
+
+.visuallyhidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #afafaf;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step.finish {
+  background-color: #0066ff;
+}

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>typeauth demo</title>
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core JS -->
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/jquery.min.js"></script>
+
+  <!-- Add GET parameters to change word generation -->
+  <script>
+    function setMode(value) {
+      var mode = value;
+      document.getElementById("mode").value = mode;
+      document.getElementById("onboarding-link").setAttribute("href","/onboarding?mode=" + mode);
+      if (mode == "eng_short"){
+        document.getElementById("dropdownMenuButton1").innerHTML = "Short words 🇬🇧"
+      };
+      if (mode == "eng_long"){
+        document.getElementById("dropdownMenuButton1").innerHTML = "Long words 🇬🇧"
+      };
+      if (mode == "pl_short"){
+        document.getElementById("dropdownMenuButton1").innerHTML = "Short words 🇵🇱"
+      };
+      if (mode == "pl_long"){
+        document.getElementById("dropdownMenuButton1").innerHTML = "Long words 🇵🇱"
+      };
+    }
+    </script>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+  <main class="form-signin">
+
+    <div class="container">
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      {% if category == 'error' %}
+      <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+    <form method="POST">
+
+        <div class="dropdown position-absolute top-0 end-0">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Select mode
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" onclick="setMode('eng_short')">Short words 🇬🇧</a></li>
+          <li><a class="dropdown-item" onclick="setMode('eng_long')">Long words 🇬🇧</a></li>
+          <li><a class="dropdown-item" onclick="setMode('pl_short')">Short words 🇵🇱</a></li>
+          <li><a class="dropdown-item" onclick="setMode('pl_long')">Long words 🇵🇱</a></li>
+        </ul>
+      </div>
+
+      <img class="mb-4" src="../static/img/typeauth-logo.png" alt="">
+
+      <h1 class="h3 mb-3 fw-normal"><span>Sign in</span></h1>
+
+      <div class="form-floating">
+        <input type="email" id="floatingInput" class="form-control" name="username" placeholder="name@example.com"
+          autocomplete="off">
+        <label for="floatingInput">Email address</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" id="floatingPassword" class="form-control" name="password" placeholder="Password"
+          autocomplete="off">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <input type="hidden" id="mode" name="mode">
+      <div class="checkbox mb-3">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" id="submit">Sign in</button>
+      <p></p>
+      <a id="onboarding-link" href="/onboarding">
+        <input class="btn btn-outline-primary" type="button" value="Register">
+      </a>
+      <p class="mt-5 mb-3 text-muted">&copy; typeauth 2022</p>
+    </form>
+  </main>
+</body>
+
+</html>

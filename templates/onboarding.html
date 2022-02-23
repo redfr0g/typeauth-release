@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>typeauth demo</title>
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core JS -->
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/onboarding.js"></script>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+  <script>
+    $(document).on("keypress", 'form', function (e) {
+      var code = e.keyCode || e.which;
+      if (code == 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+
+  <script>
+    var step;
+    step = 1;
+
+    function register() {
+      $("#form-wrapper").prop('class', 'visuallyhidden');
+
+      $("#submit-register").prop('class', 'w-100 btn btn-lg btn-primary visuallyhidden')
+      $("#submit-onboard").prop('class', 'w-100 btn btn-lg btn-primary')
+
+      $("#sentence-active").prop('class', 'text-justify sentence')
+
+      $("#sentenceInput").prop('class', 'form-floating')
+
+    }
+
+    function onboard() {
+      step++;
+
+      if (step >= 4) {
+        $("#submit-onboard").prop('class', 'w-100 btn btn-lg btn-primary visuallyhidden');
+        $("#submit").prop('class', 'w-100 btn btn-lg btn-primary');
+      }
+      $("#sentence-active").prop('id', 'sentence-old-' + step);
+      $("#sentence-old-" + step).prop('class', 'text-justify sentence visuallyhidden');
+
+      $("#sentence-hidden-" + step).prop('id', 'sentence-active');
+      $("#sentence-active").prop('class', 'text-justify sentence');
+
+      console.log("Onboard step: " + step)
+
+      $("#floatingInput").val("");
+
+    }
+
+    function highlight(text) {
+      var inputText = document.getElementById("sentence-active");
+      var innerHTML = inputText.innerHTML;
+      var index = innerHTML.indexOf(text);
+
+      innerHTML = document.getElementById("sentence-active").textContent;
+      if (innerHTML.substring(index, index + text.length)[innerHTML.substring(index, index + text.length).length - 1] == ' ') {
+        index = index + 1;
+      }
+      innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + text.length) + "</span>" + innerHTML.substring(index + text.length);
+      inputText.innerHTML = innerHTML;
+      console.log(text)
+    }
+  </script>
+  <script>
+    function checkpwd() {
+      password1 = document.getElementById('floatingPassword1').value;
+      password2 = document.getElementById('floatingPassword2').value;
+      if (password1 != password2) {
+        alert('Passwords did not match. Please try again.');
+        return false
+      }
+      else{
+        return true
+      }
+    }
+  </script>
+
+  <main class="form-signin">
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      {% if category == 'error' %}
+      <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+    <form method="POST">
+      <img class="mb-4" src="../static/img/typeauth-logo.png" alt="">
+
+      <div id="form-wrapper">
+        <div class="form-floating">
+          <input type="email" id="emailInput" class="form-control" name="username" placeholder="name@example.com"
+            autocomplete="off">
+          <label for="emailInput">Email address</label>
+        </div>
+        <p></p>
+        <div class="form-floating">
+          <input type="password" id="floatingPassword1" class="form-control" name="password1" placeholder="Password"
+            autocomplete="off">
+          <label for="floatingPassword1">Password</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" id="floatingPassword2" class="form-control" name="password2"
+            placeholder="Confirm password" autocomplete="off">
+          <label for="floatingPassword2">Confirm password</label>
+        </div>
+      </div>
+
+      <input type="hidden" id="keystrokeDynamics_1" name="dynamics1">
+      <input type="hidden" id="keystrokeDynamics_2" name="dynamics2">
+      <input type="hidden" id="keystrokeDynamics_3" name="dynamics3">
+      <input type="hidden" id="keystrokeDynamics_4" name="dynamics4">
+
+      <input type="hidden" id="backspaceCount" name="backspace_count">
+      <input type="hidden" id="shiftCount" name="shift_count">
+      <input type="hidden" id="isCapsLock" name="is_capslock">
+
+      <p id="sentence-active" class="text-justify sentence visuallyhidden">{{ text_arr[0] }}</p>
+      <p id="sentence-hidden-2" class="text-justify sentence visuallyhidden">{{ text_arr[1] }}</p>
+      <p id="sentence-hidden-3" class="text-justify sentence visuallyhidden">{{ text_arr[2] }}</p>
+      <p id="sentence-hidden-4" class="text-justify sentence visuallyhidden">{{ text_arr[3] }}</p>
+
+      <div id="sentenceInput" class="form-floating visuallyhidden">
+        <input type="text" id="floatingInput" class="form-control" name="text"
+          placeholder="Type the above text to authenticate" autocomplete="off"
+          onkeyup="highlight(document.getElementById('floatingInput').value)">
+        <label for="floatingInput">Retype the above text</label>
+      </div>
+
+      <p></p>
+
+      <button class="w-100 btn btn-lg btn-primary visuallyhidden" id="submit">Submit</button>
+    </form>
+    <button class="w-100 btn btn-lg btn-primary visuallyhidden" id="submit-onboard" onclick=onboard()>Next</button>
+    <button class="w-100 btn btn-lg btn-primary" id="submit-register" onclick="if(checkpwd()){register()}">Next</button>
+
+    <div style="text-align:center;margin-top:40px;">
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+      <span class="step"></span>
+    </div>
+    <p class="mt-5 mb-3 text-muted">&copy; typeauth 2022</p>
+
+  </main>
+</body>
+
+</html>

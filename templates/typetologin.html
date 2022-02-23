@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>typeauth demo</title>
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core JS -->
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/jquery.min.js"></script>
+  <script src="../static/js/typeauth.js"></script>
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="../static/css/signin.css" rel="stylesheet">
+</head>
+
+<body class="text-center">
+  <!-- disable enter same as in the onboarding process (due to the idle timing issues) -->
+  <script>
+    $(document).on("keypress", 'form', function (e) {
+      var code = e.keyCode || e.which;
+      if (code == 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+
+  <script>
+    function highlight(text) {
+      var inputText = document.getElementById("sentence");
+      var innerHTML = inputText.innerHTML;
+      var index = innerHTML.indexOf(text);
+
+      innerHTML = "{{ sentence }}"
+      if (innerHTML.substring(index, index + text.length)[innerHTML.substring(index, index + text.length).length - 1] == ' ') {
+        index = index + 1;
+      }
+
+      innerHTML = innerHTML.substring(0, index) + "<span class='highlight'>" + innerHTML.substring(index, index + text.length) + "</span>" + innerHTML.substring(index + text.length);
+      inputText.innerHTML = innerHTML;
+      console.log(text)
+    }
+  </script>
+
+  <main class="form-signin">
+    <div class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      {% if category == 'error' %}
+      <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% else %}
+      <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+    <form method="POST">
+      <img class="mb-4" src="../static/img/typeauth-logo.png" alt="">
+      <p id="sentence" class="text-justify">{{ sentence }}</p>
+
+      <div class="form-floating">
+        <input type="text" id="floatingInput" class="form-control" name="text"
+          placeholder="Type the above text to authenticate" autocomplete="off"
+          onkeyup="highlight(document.getElementById('floatingInput').value)">
+        <label for="floatingInput">Type the above text to authenticate</label>
+      </div>
+
+      <input type="hidden" id="keystrokeDynamics" name="dynamics">
+      <input type="hidden" id="backspaceCount" name="backspace_count">
+      <input type="hidden" id="shiftCount" name="shift_count">
+      <input type="hidden" id="isCapsLock" name="is_capslock">
+
+      <p></p>
+
+      <button class="w-100 btn btn-lg btn-primary" id="submit">Submit</button>
+      <p class="mt-5 mb-3 text-muted">&copy; typeauth 2022</p>
+    </form>
+  </main>
+</body>
+
+</html>
